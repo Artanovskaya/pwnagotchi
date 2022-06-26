@@ -110,8 +110,6 @@
           - dnsmasq
           - python3-rpi.gpio
           - firmware-ralink
-          - firmware-misc-nonfree
-          - firmware-realtek
 
   tasks:
   - name: change hostname
