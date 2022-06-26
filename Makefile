@@ -11,9 +11,9 @@ langs:
     done
 
 install:
-#	curl https://releases.hashicorp.com/packer/$(PACKER_VERSION)/packer_$(PACKER_VERSION)_linux_amd64.zip -o /tmp/packer.zip
-#	unzip /tmp/packer.zip -d /tmp
-#	sudo mv /tmp/packer /usr/bin/packer
+  curl https://releases.hashicorp.com/packer/$(PACKER_VERSION)/packer_$(PACKER_VERSION)_linux_amd64.zip -o /tmp/packer.zip
+ 	unzip /tmp/packer.zip -d /tmp
+ 	sudo mv /tmp/packer /usr/bin/packer
 	git clone https://github.com/solo-io/packer-builder-arm-image /tmp/packer-builder-arm-image
 	cd /tmp/packer-builder-arm-image && go get -d ./... && go build
 	sudo cp /tmp/packer-builder-arm-image/packer-plugin-arm-image /usr/bin
