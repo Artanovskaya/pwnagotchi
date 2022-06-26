@@ -137,12 +137,12 @@
       url: https://re4son-kernel.com/keys/http/archive-key.asc
       validate_certs: false
       state: present
-
+      
   - name: Add re4son-kernel repository
     apt_repository:
       repo: deb http://http.re4son-kernel.com/re4son/ kali-pi main
       state: present
-
+      
   - name: create /etc/apt/preferences.d/kali.pref
     copy:
       dest: /etc/apt/preferences.d/kali.pref
