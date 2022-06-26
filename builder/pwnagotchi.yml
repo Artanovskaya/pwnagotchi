@@ -7,7 +7,9 @@
       hostname: "{{ lookup('env', 'PWN_HOSTNAME') | default('pwnagotchi', true) }}"
       version: "{{ lookup('env', 'PWN_VERSION') | default('master', true) }}"
     system:
-      boot_options:
+      boot_options4:
+        - "arm_freq=800"
+      boot_optionsall:
         - "dtoverlay=dwc2"
         - "dtoverlay=spi1-3cs"
         - "dtparam=spi=on"
