@@ -7,9 +7,7 @@
       hostname: "{{ lookup('env', 'PWN_HOSTNAME') | default('pwnagotchi', true) }}"
       version: "{{ lookup('env', 'PWN_VERSION') | default('master', true) }}"
     system:
-      boot_options4:
-        - "arm_freq=800"
-      boot_optionsall:
+      boot_options:
         - "dtoverlay=dwc2"
         - "dtoverlay=spi1-3cs"
         - "dtparam=spi=on"
@@ -55,7 +53,6 @@
           - triggerhappy
           - wpa_supplicant
           - nfs-common
-          - python2*
         install:
           - rsync
           - vim
@@ -131,18 +128,18 @@
       regexp: '^ExecStart=/usr/lib/bluetooth/bluetoothd$'
       line: 'ExecStart=/usr/lib/bluetooth/bluetoothd --noplugin=sap'
       state: present
-      
+
   - name: Add re4son-kernel repo key
     apt_key:
       url: https://re4son-kernel.com/keys/http/archive-key.asc
       validate_certs: false
       state: present
-      
+
   - name: Add re4son-kernel repository
     apt_repository:
       repo: deb http://http.re4son-kernel.com/re4son/ kali-pi main
       state: present
-      
+
   - name: create /etc/apt/preferences.d/kali.pref
     copy:
       dest: /etc/apt/preferences.d/kali.pref
@@ -171,7 +168,7 @@
 
   - name: upgrade apt distro
     apt:
-      upgrade: full
+      upgrade: dist
 
   - name: install packages
     apt:
@@ -344,20 +341,13 @@
     file:
       path: /boot/ssh
       state: touch
-      
-  - name: adjust [pi4]  /boot/config.txt
-    lineinfile:
-      dest: /boot/config.txt
-      insertafter: max_framebuffers=2
-      line: '{{ item }}'
-    with_items: "{{system.boot_options4}}"
 
-  - name: adjust [all] /boot/config.txt
+  - name: adjust /boot/config.txt
     lineinfile:
       dest: /boot/config.txt
       insertafter: EOF
       line: '{{ item }}'
-    with_items: "{{system.boot_optionsall}}"
+    with_items: "{{system.boot_options}}"
 
   - name: adjust /etc/modules
     lineinfile:
